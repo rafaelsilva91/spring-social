@@ -1,7 +1,11 @@
 package io.github.rafaelsilva91.springsocial.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_users")
@@ -14,6 +18,10 @@ public class User implements Serializable {
     private Long id;
     private String name;
     private String email;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "author")
+    private List<Post> posts = new ArrayList<>();
 
     public User() {
     }
@@ -46,6 +54,14 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 
     @Override
